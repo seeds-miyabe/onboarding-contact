@@ -92,14 +92,15 @@
             </tr>
 
              <tr height="15"><td colspan="2"></td></tr>
-             <tr>
-               <td align="left" valign="top" nowrap>このフォームを知った理由（複数選択可）<font color="red">※</font></td>
+            <tr>
+                <td align="left" valign="top" nowrap>このフォームを知った理由（複数選択可）<font color="red">※</font></td>
                 <td align="left" valign="top" nowrap>
-                    <label><input type="checkbox" name="interest[]" value="家族から聞いて" <?php echo in_array('家族から聞いて', $interests, true) ? 'checked' : ''; ?>> 家族から聞いて</label><br>
-                    <label><input type="checkbox" name="interest[]" value="友人から聞いて" <?php echo in_array('友人から聞いて', $interests, true) ? 'checked' : ''; ?>> 友人から聞いて</label><br>
-                    <label><input type="checkbox" name="interest[]" value="新聞" <?php echo in_array('新聞', $interests, true) ? 'checked' : ''; ?>> 新聞</label><br>
-                    <label><input type="checkbox" name="interest[]" value="ラジオ" <?php echo in_array('ラジオ', $interests, true) ? 'checked' : ''; ?>> ラジオ</label><br>
-                    <label><input type="checkbox" name="interest[]" value="Web" <?php echo in_array('Web', $interests, true) ? 'checked' : ''; ?>> Web</label>
+                    <?php foreach (getInterests() as $item): ?>
+                        <label>
+                            <input type="checkbox" name="interest[]" value="<?php echo htmlspecialchars($item, ENT_QUOTES, 'UTF-8'); ?>" <?php echo in_array($item, $interests, true) ? 'checked' : ''; ?>>
+                            <?php echo htmlspecialchars($item, ENT_QUOTES, 'UTF-8'); ?>
+                        </label><br>
+                    <?php endforeach; ?>
                 </td>
             </tr>
 

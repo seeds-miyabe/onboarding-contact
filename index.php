@@ -6,7 +6,7 @@ require_once 'private/bootstrap.php';
 require_once 'private/database.php';
 require_once 'private/validation.php';
 require_once 'private/mail.php';
-
+require_once 'private/master.php';
 // 実装
 $errors = [];
 $mode   = 'input';
@@ -14,7 +14,7 @@ $mode   = 'input';
 $name      = $_POST['user_name'] ?? '';
 $furigana  = $_POST['user_namefurigana'] ?? '';
 $email     = $_POST['user_email'] ?? '';
-$gender    = $_POST['gender'] ?? '女性';
+$gender = $_POST['gender'] ?? '';
 $zip1      = $_POST['zip1'] ?? '';
 $zip2      = $_POST['zip2'] ?? '';
 $pref      = $_POST['pref'] ?? '';
@@ -36,15 +36,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } elseif (isset($_POST['btn_submit'])) {
 
-       if (saveContact($_POST)) {
-            sendCompleteMail($email, $name, $message);
+    $errors = validateContactForm($_POST);
 
-            header('Location: thanks.php');
-            exit;
+    if (empty($errors)) {
+        if (saveContact($_POST)) {
+            sendCompleteMail($email, $name, $message);
+            redirect('thanks.php');
         } else {
             $errors[] = '保存処理に失敗しました。';
             $mode = 'confirm';
         }
+    } else {
+        $mode = 'input';
+    }
 
     } elseif (isset($_POST['btn_back'])) {
         $mode = 'input';

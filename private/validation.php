@@ -6,6 +6,7 @@ function validateContactForm(array $params): array
     $name      = $params['user_name'] ?? '';
     $furigana  = $params['user_namefurigana'] ?? '';
     $email     = $params['user_email'] ?? '';
+    $gender    = $params['gender'] ?? '';
     $zip1      = $params['zip1'] ?? '';
     $zip2      = $params['zip2'] ?? '';
     $pref      = $params['pref'] ?? '';
@@ -30,6 +31,12 @@ function validateContactForm(array $params): array
         $errors[] = '正しいメールアドレスの形式で入力してください。';
     }
 
+    if ($gender === '') {
+        $errors[] = '性別を選択してください。';
+    } elseif (!in_array($gender, getGenders(), true)) {
+        $errors[] = '正しい性別を選択してください。';
+    }
+
     if (trim($zip1) === '' || trim($zip2) === '') {
         $errors[] = '郵便番号を入力してください。';
     } elseif (!preg_match('/^\d{3}$/', $zip1) || !preg_match('/^\d{4}$/', $zip2)) {
@@ -50,12 +57,19 @@ function validateContactForm(array $params): array
         $errors[] = '住所（それ以降の住所）を入力してください。';
     }
 
-    if (empty($interests)) {
-        $errors[] = '知った理由を1つ以上選択してください。';
-    }
-
     if (trim($message) === '') {
         $errors[] = 'お問い合わせ内容を入力してください。';
+    }
+
+    if (empty($interests)) {
+    $errors[] = '知った理由を1つ以上選択してください。';
+    } else {
+        foreach ($interests as $item) {
+            if (!in_array($item, getInterests(), true)) {
+                $errors[] = '正しい「知った理由」を選択してください。';
+                break;
+            }
+        }
     }
 
     return $errors;

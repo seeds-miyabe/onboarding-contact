@@ -82,3 +82,28 @@ function saveContact(array $data): bool
     $db->close();
     return false;
 }
+
+function getAllContacts(): array
+    {
+        $db = connectDB();
+        if (!$db) {
+            return [];
+        }
+
+        $sql = "SELECT id, name, furigana, email, gender, zip_code, pref, city, address, building, message, interest, created_at 
+                FROM bbs.contacts 
+                ORDER BY created_at DESC";
+
+        $result = $db->query($sql);
+        if (!$result) {
+            $db->close();
+            return [];
+        }
+
+        $contacts = $result->fetch_all(MYSQLI_ASSOC);
+
+        $result->free();
+        $db->close();
+
+        return $contacts;
+    }

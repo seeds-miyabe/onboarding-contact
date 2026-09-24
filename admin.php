@@ -3,6 +3,8 @@
 require_once 'private/bootstrap.php';
 require_once 'private/database.php';
 
+$contacts_list = getAllContacts();
+
 $db = connectDB();
 
 $sql = "SELECT * FROM contacts ORDER BY created_at DESC";
