@@ -39,7 +39,7 @@ function saveContact(array $data): bool
     $name         = $data['user_name'] ?? '';
     $furigana     = $data['user_namefurigana'] ?? '';
     $email        = $data['user_email'] ?? '';
-    $gender       = $data['gender'] ?? '女性';
+    $gender = $_POST['gender'] ?? '';
     $zip1         = $data['zip1'] ?? '';
     $zip2         = $data['zip2'] ?? '';
     $pref         = $data['pref'] ?? '';

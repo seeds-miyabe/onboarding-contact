@@ -5,20 +5,6 @@ require_once 'private/database.php';
 
 $contacts_list = getAllContacts();
 
-$db = connectDB();
-
-$sql = "SELECT * FROM contacts ORDER BY created_at DESC";
-$result = $db->query($sql);
-
-$contacts_list = [];
-
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        $contacts_list[] = $row;
-    }
-}
-
-$db->close();
 ?>
 
 <!DOCTYPE html>

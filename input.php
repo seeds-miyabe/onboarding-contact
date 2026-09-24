@@ -1,3 +1,10 @@
+<?php
+if (!defined('IN_APP')) {
+    header('Location: index.php');
+    exit;
+}
+?>
+
 <form action="index.php" method="POST">
         
         <table width="350">

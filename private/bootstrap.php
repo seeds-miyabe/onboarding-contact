@@ -6,9 +6,3 @@
 require_once 'exception_handler.php';
 require_once 'helper.php';
 require_once 'private/master.php';
-
-function redirect(string $url): void
-{
-    header("Location: {$url}");
-    exit;
-}
